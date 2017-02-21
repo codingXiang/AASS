@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta charset="utf-8">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        div.box {
+            background-color: white;
+            width: 90%;
+            border: 1px solid lightgray;
+            padding: 10px;
+            box-shadow: 4px 4px 3px rgba(20%, 20%, 40%, 0.5);
+        }
+
+        div.datatable {
+            background-color: white;
+            width: 90%;
+            border: 1px solid lightgray;
+            padding: 25px;
+        }
+
+        div.block {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        article {
+            margin-left: 30%;
+            padding: 1em;
+            overflow: hidden;
+        }
+
+        table {
+            border-collapse: collapse;
+            background-color: white;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2 text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #888888;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .deleteBtn {
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        input[type=button] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=button]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="block">
+        <form id="stdForm">
+            學號
+            <input type="text" name="stdNumber" placeholder="請輸入學號">
+            <br> 姓名
+            <input type="text" name="stdName" placeholder="請輸入姓名">
+            <br>成績
+            <input type="text" name="stdGrade" placeholder="請輸入成績">
+            <br><br>
+            <input type="button" onclick="sendStdData()" value="送出資料">
+        </form>
+    </div>
+    <br>
+    <div class="block">
+        <table id="stdList">
+            <tr>
+                <th>學號</th>
+                <th>姓名</th>
+                <th>成績</th>
+                <th>修改按鈕</th>
+            </tr>
+        </table>
+    </div>
+
+</body>
+<script>
+    var currentCount = 1;
+
+    function sendStdData() {
+        var stdNumber = getNameValue("stdNumber");
+        var stdName = getNameValue("stdName");
+        var stdGrade = getNameValue("stdGrade");
+        addNewDataToTable(stdNumber, stdName, stdGrade)
+        getId("stdForm").reset();
+    }
+
+    function getNameValue(name) {
+        return document.getElementsByName(name)[0].value;
+    }
+
+    function getId(id) {
+        return document.getElementById(id);
+    }
+
+    function addNewDataToTable(number, name, grade) {
+        var num = getId("stdList").rows.length;
+        var Tr = getId("stdList").insertRow(num);
+        Tr.id = "tr" + currentCount
+        Td = Tr.insertCell(Tr.cells.length);
+        Td.innerHTML = number;
+        Td = Tr.insertCell(Tr.cells.length);
+        Td.innerHTML = name;
+        Td = Tr.insertCell(Tr.cells.length);
+        Td.innerHTML = grade;
+        Td = Tr.insertCell(Tr.cells.length);
+        Td.innerHTML = "<button class = \"deleteBtn\" onclick=\"removeDataToTable(" + Tr.id + ")\">刪除</button>";
+        currentCount += 1;
+    }
+
+    function removeDataToTable(id) {
+        var rowIndex = id.rowIndex;
+        getId("stdList").deleteRow(rowIndex);
+    }
+</script>
+
+</html>
